@@ -1,0 +1,128 @@
+﻿<parameters>
+
+	<!-- Prompts where to copy the content files and takes a web site path  -->
+	<parameter name="Application Path" description="Full site path where you would like to install your application (i.e., Default Web Site/kartris)" defaultValue="Default Web Site/kartris" tags="iisapp">
+		<parameterEntry type="ProviderPath" scope="iisapp" match="kartris" />
+	</parameter>
+
+	<parameter name="SetAcl0" description="Automatically sets write access for the app" defaultValue="{Application Path}" tags="hidden">
+        	<parameterEntry type="ProviderPath" scope="setAcl" match="kartris" />
+	</parameter>
+
+	<!-- This is the parameter that is used to set ACLs, it's set to the application path filled in by the user -->
+	<parameter name="SetAcl1" description="Automatically sets write access for the app" defaultValue="{Application Path}/admin" tags="hidden">
+		<parameterEntry type="ProviderPath" scope="setAcl" match="kartris/admin" />
+	</parameter>
+
+	<!-- This is the parameter that is used to set ACLs, it's set to the application path filled in by the user -->
+	<parameter name="SetAcl2" description="Automatically sets write access for the app" defaultValue="{Application Path}/App_Browsers" tags="hidden">
+		<parameterEntry type="ProviderPath" scope="setAcl" match="kartris/App_Browsers" />
+	</parameter>
+
+	<!-- This is the parameter that is used to set ACLs, it's set to the application path filled in by the user -->
+	<parameter name="SetAcl4" description="Automatically sets write access for the app" defaultValue="{Application Path}/bin" tags="hidden">
+		<parameterEntry type="ProviderPath" scope="setAcl" match="kartris/bin" />
+	</parameter>
+
+	<!-- This is the parameter that is used to set ACLs, it's set to the application path filled in by the user -->
+	<parameter name="SetAcl6" description="Automatically sets write access for the app" defaultValue="{Application Path}/Images" tags="hidden">
+		<parameterEntry type="ProviderPath" scope="setAcl" match="kartris/Images" />
+	</parameter>
+
+	<!-- This is the parameter that is used to set ACLs, it's set to the application path filled in by the user -->
+	<parameter name="SetAcl7" description="Automatically sets write access for the app" defaultValue="{Application Path}/Javascript" tags="hidden">
+		<parameterEntry type="ProviderPath" scope="setAcl" match="kartris/Javascript" />
+	</parameter>
+
+	<!-- This is the parameter that is used to set ACLs, it's set to the application path filled in by the user -->
+	<parameter name="SetAcl9" description="Automatically sets write access for the app" defaultValue="{Application Path}/Plugins" tags="hidden">
+		<parameterEntry type="ProviderPath" scope="setAcl" match="kartris/Plugins" />
+	</parameter>
+
+	<!-- This is the parameter that is used to set ACLs, it's set to the application path filled in by the user -->
+	<parameter name="SetAcl10" description="Automatically sets write access for the app" defaultValue="{Application Path}/Protected" tags="hidden">
+		<parameterEntry type="ProviderPath" scope="setAcl" match="kartris/Protected" />
+	</parameter>
+
+  <!-- This is the parameter that is used to set ACLs, it's set to the application path filled in by the user -->
+  <parameter name="SetAcl3" description="Automatically sets write access for the app" defaultValue="{Application Path}/Skins" tags="hidden">
+    <parameterEntry type="ProviderPath" scope="setAcl" match="kartris/Skins" />
+  </parameter>
+
+	<!-- This is the parameter that is used to set ACLs, it's set to the application path filled in by the user -->
+	<parameter name="SetAcl12" description="Automatically sets write access for the app" defaultValue="{Application Path}/Uploads" tags="hidden">
+		<parameterEntry type="ProviderPath" scope="setAcl" match="kartris/Uploads" />
+	</parameter>
+	<!-- This is the parameter that is used to set ACLs, it's set to the application path filled in by the user -->
+	<parameter name="SetAcl13" description="Automatically sets write access for the app" defaultValue="{Application Path}/UserControls" tags="hidden">
+		<parameterEntry type="ProviderPath" scope="setAcl" match="kartris/UserControls" />
+	</parameter>
+
+  <parameter
+      name="Database Server"
+      description="Location of your database server."
+      defaultValue=".\sqlexpress"
+      tags="DBServer, SQL">
+  </parameter>
+
+  <parameter
+    name="Database Name"
+    description="Name of the Kartris database."
+    defaultValue="KartrisSQL" tags="DBName, SQL">
+    <parameterEntry type="TextFile" scope="InstallSQL.sql" match="PlaceHolderForDb" />
+  </parameter>
+
+  <parameter
+    name="Database Username"
+    description="User name to access you application database."
+    defaultValue="KartrisSQLUser"
+    tags="SQL, DbUsername">
+    <parameterEntry type="TextFile" scope="InstallSQL.sql" match="PlaceHolderForUser" />
+  </parameter>
+
+  <parameter
+    name="Database Password"
+    description="Password for the Database Username."
+    tags="New, Password, SQL, DbUserPassword">
+    <parameterEntry type="TextFile" scope="InstallSQL.sql" match="PlaceHolderForPassword" />
+  </parameter>
+
+  <parameter
+    name="Database Administrator"
+    description="Administrator username for your database."
+    defaultValue="sa"
+    tags="SQL, DbAdminUsername">
+  </parameter>
+
+  <parameter
+    name="Database Administrator Password"
+    description="Password that is associated with the database administrator account."
+    tags="Password, SQL, DbAdminPassword">
+  </parameter>
+
+  <parameter
+    name="Create DB and DB User Connection String"
+    description="Automatically sets the connection string for the connection request."
+    defaultValue="Server={Database Server};Database={Database Name};uid={Database Administrator};Pwd={Database Administrator Password};"
+    tags="Hidden,SQLConnectionString,Validate">
+    <parameterEntry type="ProviderPath" scope="dbfullsql" match="InstallSQL.sql" />
+  </parameter>
+
+  <parameter
+    name="Populate DB Connection String"
+    description="Automatically sets the connection string for the connection request."
+    defaultValue="Server={Database Server};Database={Database Name};uid={Database Administrator};Pwd={Database Administrator Password};"
+    tags="Hidden,SQLConnectionString,Validate">
+    <parameterEntry type="ProviderPath" scope="dbfullsql" match="KartrisSQL_MainData.sql" />
+  </parameter>
+
+  <parameter
+    name="Connection String for Config"
+    description="Connection string to enter into config"
+    defaultValue="Data Source={Database Server};database={Database Name};user id={Database Username};password={Database Password}"
+    tags="Hidden, SQL">
+    <parameterEntry type="XmlFile" scope="\\web\.config$" match="//*[local-name()='connectionStrings']/*[local-name()='add'][@name='KartrisSQLConnection']/@connectionString" />
+  </parameter>
+
+
+</parameters>

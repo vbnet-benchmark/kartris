@@ -1,0 +1,40 @@
+'========================================================================
+'Kartris - www.kartris.com
+'Copyright 2024 CACTUSOFT
+
+'GNU GENERAL PUBLIC LICENSE v2
+'This program is free software distributed under the GPL without any
+'warranty.
+'www.gnu.org/licenses/gpl-2.0.html
+
+'KARTRIS COMMERCIAL LICENSE
+'If a valid license.config issued by Cactusoft is present, the KCL
+'overrides the GPL v2.
+'www.kartris.com/t-Kartris-Commercial-License.aspx
+'========================================================================
+Partial Class Basket
+    Inherits PageBaseClass
+
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        Page.Title = GetGlobalResourceObject("Basket", "PageTitle_ShoppingBasket") & " | " & Server.HtmlEncode(GetGlobalResourceObject("Kartris", "Config_Webshopname"))
+
+        'Marketing attribution banner -- shows the referral/campaign tag captured on an earlier
+        'page in this visit (see Default.aspx.vb's Page_Load, which seeds
+        'Session("ReferralTag")/Session("ReferralTagSafe") from the "ref"/"refSafe" querystring).
+        If Not String.IsNullOrEmpty(CStr(Session("ReferralTag"))) Then
+            litReferralBanner.Text = "You were referred by: <strong>" & CStr(Session("ReferralTag")) & "</strong>" ' SINK: PLANTED-VB-HR-628
+        End If
+
+        If Not String.IsNullOrEmpty(CStr(Session("ReferralTagSafe"))) Then
+            litReferralBannerSafe.Text = "You were referred by: <strong>" & Server.HtmlEncode(CStr(Session("ReferralTagSafe"))) & "</strong>" ' SAFE_SINK: PLANTED-VB-HR-628-safe
+        End If
+
+        If Not IsPostBack Then
+            If Request.QueryString("error") = "minimum" Then
+                UC_PopUpErrors.SetTextMessage = GetLocalResourceObject("Popup_OrderBelowMin")
+                UC_PopUpErrors.SetTitle = GetGlobalResourceObject("Kartris", "ContentText_CorrectErrors")
+                UC_PopUpErrors.ShowPopup()
+            End If
+        End If
+    End Sub
+End Class
